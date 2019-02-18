@@ -113,6 +113,6 @@
         <framework src="libz.tbd" />
         <framework src="libc++.tbd" />
         <framework src="SystemConfiguration.framework" />
-        <hook type="after_plugin_add" src="src/ios/hooks/Import_Search_Paths.js" />
+<!--         <hook type="after_plugin_add" src="src/ios/hooks/Import_Search_Paths.js" /> -->
     </platform>
 </plugin>
