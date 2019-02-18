@@ -1,0 +1,32 @@
+{
+    "name": "cordova-plugin-nordic-dfu",
+    "version": "1.5.0",
+    "description": "cordova-plugin-nordic-dfu",
+    "cordova": {
+        "id": "cordova-plugin-nordic-dfu",
+        "platforms": [
+            "android",
+            "ios"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vensi/cordova-plugin-nordic-dfu"
+    },
+    "keywords": [
+        "ecosystem:cordova",
+        "cordova",
+        "vensi",
+        "cordova-ios",
+        "cordova-android",
+        "dfu",
+        "DFUPlugin",
+        "bluetooth",
+        "ble"
+    ],
+    "devDependencies": {
+        "xcode": "0.9.1"
+    },
+    "author": "surya.a@vensi.com",
+    "license": "ISC"
+}

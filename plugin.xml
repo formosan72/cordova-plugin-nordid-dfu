@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-plugin-nordic-dfu" version="1.5.0">
+    <name>DFU</name>
+    <engines>
+        <engine name="cordova" version=">=3.4.0" />
+    </engines>
+    <js-module src="www/dfuimpl.js" name="dfuimpl">
+        <clobbers target="dfuimpl" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="DFUImpl">
+                <param name="android-package" value="com.vensi.plugin.DFUImpl" />
+            </feature>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:exported="true" android:label="dfu_service_title" android:name="no.nordicsemi.android.dfu.DfuProgressService">
+                <intent-filter>
+                    <action android:name="no.nordicsemi.android.dfu.action.DFU_UPLOAD" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </service>
+        </config-file>
+        
+        <framework src="com.android.support:support-v4:26.+" />
+        <framework src="com.android.support:appcompat-v7:26.+" />
+        
+        <source-file src="src/android/libs/DFUImplementation.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/gson-2.2.4.jar" target-dir="libs/" />
+        <source-file src="src/android/DFUImpl.java" target-dir="src/com/vensi/plugin/" />
+        <source-file src="src/android/DFUView.java" target-dir="src/com/vensi/plugin/" />
+    </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="DFUImpl">
+                <param name="ios-package" value="DFUImpl" />
+            </feature>
+        </config-file>
+        <dependency id="cordova-plugin-add-swift-support" version="1.6.2" />
+        <header-file src="src/ios/DFUImpl.h" />
+        <source-file src="src/ios/DFUImpl.m" />
+        <header-file src="src/ios/DFUView.h" />
+        <source-file src="src/ios/DFUView.m" />
+        <header-file src="src/ios/Reachability.h" />
+        <source-file src="src/ios/Reachability.m" />
+        <!-- source to swift dfu library-->
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFUPeripheralSelector.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFUPeripheralSelectorDelegate.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFUExecutor.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFUServiceController.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFUServiceInitiator.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFU/DFUFirmware.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/GenericDFU/DFU/DFUServiceDelegate.swift" />
+        <!-- Legacy DFU-->
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUControlPoint.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUPacket.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Characteristics/DFUVersion.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/DFU/LegacyDFUExecutor.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/DFU/LegacyDFUServiceInitiator.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/DFU/LegacyDFUServiceController.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Peripherals/LegacyDFUPeripheral.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Peripherals/LegacyDFUPeripheralDelegate.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/LegacyDFU/Services/LegacyDFUService.swift" />
+        <!-- secure DFU-->
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/Characteristics/SecureDFUControlPoint.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/Characteristics/SecureDFUPacket.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUExecutor.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUServiceInitiator.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUServiceController.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/DFU/SecureDFUServiceDelegate.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/Peripheral/SecureDFUPeripheral.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/Peripheral/SecureDFUPeripheralDelegate.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Implementation/SecureDFU/Services/SecureDFUService.swift" />
+        <!-- Utilities -->
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/crc32.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Data.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Double.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/ZipArchive.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/DFUPackage/Manifest/Manifest.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/DFUPackage/Manifest/ManifestFirmwareInfo.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/DFUPackage/Manifest/SoftdeviceBootloaderInfo.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/HexToBinConverter/IntelHex2BinConverter.h" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/HexToBinConverter/IntelHex2BinConverter.m" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Logging/LoggerDelegate.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Logging/LoggerHelper.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Streams/DFUStream.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Streams/DFUStreamBin.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Streams/DFUStreamHex.swift" />
+        <source-file src="src/ios/dfu_source/iOSDFULibrary/Classes/Utilities/Streams/DFUStreamZip.swift" />
+        <!-- Zip Archieves-->
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/crypt.h" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/ioapi.c" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/ioapi.h" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/module.modulemap" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/unzip.c" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/unzip.h" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/zip.c" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/minizip/zip.h" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/QuickZip.swift" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/Zip.swift" />
+        <source-file src="src/ios/dfu_source/Zip/Zip/ZipUtilities.swift" />
+        <framework src="libz.tbd" />
+        <framework src="libc++.tbd" />
+        <framework src="SystemConfiguration.framework" />
+        <hook type="after_plugin_add" src="src/ios/hooks/Import_Search_Paths.js" />
+    </platform>
+</plugin>
